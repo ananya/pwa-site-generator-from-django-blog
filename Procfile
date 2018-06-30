@@ -1,1 +1,1 @@
-web: gunicorn django-974cec0df19257a03dcb1c253c5c2128bd59f153.wsgi
+web: gunicorn webooks.wsgi
