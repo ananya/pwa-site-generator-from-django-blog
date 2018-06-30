@@ -1,1 +1,1 @@
-web: gunicorn webooks.wsgi
+web: gunicorn blog.wsgi
