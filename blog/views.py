@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import HttpResponse
 import json as simplejson
-
+import time
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -18,7 +18,8 @@ def post_detail(request, pk):
     return render(request, 'blog/post_detail.html', {'post': post})
 
 def pwa_add_to_json(request, pk):
-    f= open("try.json", "w+")
+    moment = str(pk)
+    f= open('manifest'+moment+'.json', "w+")
     queryset = PWA.objects.filter(pk=pk)
     json = simplejson.dumps( [{'name': o.name,
                                'short_name': o.short_name,
@@ -47,7 +48,7 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            
+            pwa_make(request)
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
