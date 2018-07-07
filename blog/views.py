@@ -1,9 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
-from .models import Post, Comment
-from .forms import PostForm, CommentForm
+from .models import Post, Comment, PWA
+from .forms import PostForm, CommentForm, PWAForm
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.http import HttpResponse
+import json as simplejson
 
 
 def post_list(request):
@@ -13,6 +16,29 @@ def post_list(request):
 def post_detail(request, pk):
     post = get_object_or_404(Post, pk=pk)
     return render(request, 'blog/post_detail.html', {'post': post})
+
+def pwa_add_to_json(request, pk):
+    f= open("try.json", "w+")
+    queryset = PWA.objects.filter(pk=pk)
+    json = simplejson.dumps( [{'name': o.name,
+                               'short_name': o.short_name,
+                               'start_url': o.start_url} for o in queryset] )
+    
+    f.write(json)
+    f.close
+    return render(request, 'blog/post_list.html')
+
+def pwa_make(request):
+    if request.method == "POST":
+        form = PWAForm(request.POST)
+        if form.is_valid():
+            pwa = form.save(commit=False)
+            
+            pwa.save()
+            return pwa_add_to_json(request, pk=pwa.pk)
+    else:
+        form = PWAForm()
+    return render(request, 'blog/pwa_make.html', {'form': form})
 
 @login_required
 def post_new(request):
@@ -84,5 +110,4 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
-
 

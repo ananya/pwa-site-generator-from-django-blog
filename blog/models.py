@@ -1,6 +1,10 @@
 from django.db import models
 from django.utils import timezone
 
+class PWA(models.Model):
+    name = models.CharField(max_length=200)
+    short_name = models.CharField(max_length=200)
+    start_url = models.CharField(max_length=200)
 
 class Post(models.Model):
     author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
