@@ -48,7 +48,6 @@ def post_new(request):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            pwa_make(request)
             post.save()
             return redirect('post_detail', pk=post.pk)
     else:
