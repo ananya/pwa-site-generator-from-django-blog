@@ -2,12 +2,12 @@ certifi==2018.4.16
 chardet==3.0.4
 dj-database-url==0.5.0
 Django==1.11.13
+django-heroku==0.3.1
 gunicorn==19.8.1
 idna==2.7
 ordereddict==1.1
 pbr==4.0.4
 pipenv==2018.6.25
-
 psycopg2==2.7.5
 pytz==2018.4
 requests==2.19.1

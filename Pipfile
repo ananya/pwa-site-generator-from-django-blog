@@ -8,6 +8,8 @@ url = "https://pypi.org/simple"
 [packages]
 requests = "*"
 dj-database-url = "*"
+django-heroku = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.5"
