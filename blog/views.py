@@ -23,8 +23,40 @@ def pwa_add_to_json(request, pk):
     queryset = PWA.objects.filter(pk=pk)
     json = simplejson.dumps( [{'name': o.name,
                                'short_name': o.short_name,
-                               'start_url': o.start_url} for o in queryset] )
-    
+                               'start_url': o.start_url,
+                               'icons': [{
+                                   'src': o.icon_src_1,
+                                   'sizes': o.size_1,
+                                   'type': o.type_of_icon_1
+                               },
+                               {
+                                   'src': o.icon_src_2,
+                                   'sizes': o.size_2,
+                                   'type': o.type_of_icon_2
+                               },
+                               {
+                                   'src': o.icon_src_3,
+                                   'sizes': o.size_3,
+                                   'type': o.type_of_icon_3
+                               },
+                               {
+                                   'src': o.icon_src_4,
+                                   'sizes': o.size_4,
+                                   'type': o.type_of_icon_4
+                               },
+                               {
+                                   'src': o.icon_src_5,
+                                   'sizes': o.size_5,
+                                   'type': o.type_of_icon_5
+                               },
+                               {
+                                   'src': o.icon_src_6,
+                                   'sizes': o.size_6,
+                                   'type': o.type_of_icon_6
+                               }],
+                               'display': o.display,
+                               'background_color': o.background_color,
+                               'theme_color': o.theme_color} for o in queryset] )
     f.write(json)
     f.close
     return render(request, 'blog/post_list.html')
