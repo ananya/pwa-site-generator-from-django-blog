@@ -20,7 +20,8 @@ def post_detail(request, pk):
 
 def pwa_add_to_json(request, pk):
     moment = str(pk)
-    f= open('manifest'+moment+'.json', "w+")
+    f= open('blog/static/manifest'+moment+'.json', "w+")
+    # f= open('manifest'+moment+'.json', "w+")
     queryset = PWA.objects.filter(pk=pk)
     json = simplejson.dumps( [{'name': o.name,
                                'short_name': o.short_name,
